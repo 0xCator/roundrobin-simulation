@@ -11,9 +11,11 @@ public class process {
 
 
 
-    process(int BurstTime){
+    process(int ID, int BurstTime, int ArrivalTime){
+        this.ID = ID;
         this.BurstTime = BurstTime;
         this.StartingBurstTime = BurstTime;
+        this.ArrivalTime = ArrivalTime;
     }
 
 
@@ -48,7 +50,12 @@ public class process {
     public void setID(int ID){
         this.ID  = ID;
     }
-    
+
+    private void setBurstTime(int BurstTime)
+    {
+        this.BurstTime = BurstTime;
+    }
+
     public void setArrivalTime(int ArrivalTime){
         this.ArrivalTime = ArrivalTime;
     }

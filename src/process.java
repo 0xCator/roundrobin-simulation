@@ -11,8 +11,9 @@ public class process {
 
 
 
-    process(){
-        StartingBurstTime = BurstTime;
+    process(int BurstTime){
+        this.BurstTime = BurstTime;
+        this.StartingBurstTime = BurstTime;
     }
 
 
@@ -51,15 +52,15 @@ public class process {
     public void setArrivalTime(int ArrivalTime){
         this.ArrivalTime = ArrivalTime;
     }
-    public void setBurstTime(int BurstTime){
-        this.BurstTime = BurstTime;
-    }
+    
     public void setCompleteTime(int CompleteTime){
         this.CompleteTime = CompleteTime;
     }
+    
     public void setTurnAroundTime(int TurnAroundTime){
         this.TurnAroundTime = TurnAroundTime;
     }
+    
     public void setWaitingTime(int WaitingTime){
         this.WaitingTime = WaitingTime;
     }

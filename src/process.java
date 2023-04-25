@@ -51,9 +51,12 @@ public class process {
         this.ID  = ID;
     }
 
-    private void setBurstTime(int BurstTime)
+    public void setBurstTime(int BurstTime)
     {
-        this.BurstTime = BurstTime;
+        if (BurstTime < 0)
+            this.BurstTime = 0;
+        else
+            this.BurstTime = BurstTime;
     }
 
     public void setArrivalTime(int ArrivalTime){

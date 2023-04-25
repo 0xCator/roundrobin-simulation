@@ -46,7 +46,7 @@
                   <Label text="Quantum time:" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                   <TextField fx:id="quantumCountField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Button mnemonicParsing="false" onAction="#onCreateClick" text="Create" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
-                  <Button fx:id="runButton" disable="true" mnemonicParsing="false" text="Run" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                  <Button fx:id="runButton" disable="true" mnemonicParsing="false" onAction="#onRunClick" text="Run" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                </children>
             </GridPane>
             <Label fx:id="errorMsgLabel" textFill="RED" GridPane.halignment="CENTER" GridPane.rowIndex="2">

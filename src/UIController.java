@@ -33,6 +33,13 @@ public class UIController {
         return false;
     }
 
+    private boolean isValidInput(int input, boolean greaterThanZero) {
+        if (greaterThanZero)
+            return input > 0;
+        else
+            return input >= 0;
+    }
+
     @FXML
     public void initialize() {
         //Connecting the columns to the properties from the view class
@@ -82,6 +89,19 @@ public class UIController {
 
     @FXML
     private void onRunClick() {
-
+        //Step 1: Validate all input
+        for (ProcessView proc:processList) {
+            boolean check = isValidInput(proc.getArrivalTime(), false) && isValidInput(proc.getBurstTime(), true);
+            if (!check) {
+                errorMsgLabel.setText("Error: Enter appropriate values (In the process table)");
+                return;
+            } else
+                errorMsgLabel.setText("");
+        }
+        //Step 2: Parse all input into objects and add to RoundRobin object
+        //Step 3: Receive results from RoundRobin object
+        //Step 4: Print Gantt chart
+        //Step 5: Print average values
+        //Step 6: Print each process' values
     }
 }

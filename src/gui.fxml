@@ -68,7 +68,7 @@
       </TableView>
       <ScrollPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
          <content>
-            <Canvas fx:id="resCanvas" height="200.0" width="625.0" />
+            <Canvas fx:id="resCanvas" height="200.0" width="800.0" />
          </content>
       </ScrollPane>
    </children>

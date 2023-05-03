@@ -1,5 +1,5 @@
 import javafx.fxml.FXML;
-import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.*;
 import javafx.scene.control.*;
 import javafx.scene.control.TableColumn.*;
 import javafx.scene.control.cell.*;
@@ -98,6 +98,7 @@ public class UIController {
 
     @FXML
     private void onRunClick() {
+        GraphicsContext gc = resCanvas.getGraphicsContext2D();
         //Step 1: Validate all input
         for (ProcessView proc:processList) {
             boolean check = isValidInput(proc.getArrivalTime(), false) &&
@@ -113,17 +114,35 @@ public class UIController {
             process proc = new process(i, processList.get(i).getBurstTime(), processList.get(i).getArrivalTime());
             roundRobinOperation.addProcess(proc);
         }
-        //Step 3: Clear the canvas and run the code
+        //Step 3: Clear the canvas and run the operation
+        gc.clearRect(0,0,640,360);
         roundRobinOperation.schedule();
         //Step 4: Print Gantt chart
+        drawGantt(gc);
         //Step 5: Print average values
         double compTime = roundRobinOperation.getAvgCompleteTime();
         double waitingTime = roundRobinOperation.getAvgWaitingTime();
         double turnAround = roundRobinOperation.getAvgTurnAroundTime();
+        String avgText = "Average complete time: " + compTime + "\tAverage waiting time: " +
+                waitingTime + "\tAverage turnaround time: " + turnAround;
+        gc.strokeText(avgText, 0, 56);
         //Step 6: Print each process' values
         ArrayList<process> procList = roundRobinOperation.getProcesses();
 
         //Step 7: Clear list to avoid future conflicts
         roundRobinOperation.clearProcesses();
+    }
+
+    private void drawGantt(GraphicsContext graphicsContext) {
+        int ganttLength = 3;
+        double boxLength = 30;
+        graphicsContext.strokeText("0", 0, 44);
+        for (int i = 0; i < ganttLength; i++) {
+            double boxStart = 2 + (boxLength * i), boxEnd = boxLength * (i+1), nameSpace;
+            graphicsContext.strokeRect(boxStart, 2, boxLength, 30); //Process box
+            graphicsContext.strokeText(i+2 + "", boxEnd, 44); //Process end point
+            nameSpace = (i>9) ? 5 : 8; //The name's centering depends on the PID
+            graphicsContext.strokeText("P"+i, boxStart + nameSpace, 20); //Process name
+        }
     }
 }

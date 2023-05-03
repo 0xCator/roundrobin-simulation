@@ -77,6 +77,10 @@ public class RoundRobin {
     }
 
     private void calcAverage() {
+        //Resetting the average values
+        this.avgCompleteTime = 0;
+        this.avgTurnAroundTime = 0;
+        this.avgWaitingTime = 0;
         for (process p : processes) {
             avgWaitingTime += p.getWaitingTime();
             avgCompleteTime += p.getCompleteTime();

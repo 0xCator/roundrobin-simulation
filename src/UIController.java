@@ -1,12 +1,15 @@
 import javafx.fxml.FXML;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
 import javafx.scene.control.TableColumn.*;
 import javafx.scene.control.cell.*;
 import javafx.collections.*;
 import javafx.util.converter.*;
+import java.util.*;
 
 public class UIController {
-    //Model reference goes here
+    //Operation class reference
+    private RoundRobin roundRobinOperation;
     //Components
     @FXML
     private Label errorMsgLabel;
@@ -24,8 +27,14 @@ public class UIController {
     private TableColumn<ProcessView, Integer> arrivalColumn;
     @FXML
     private TableColumn<ProcessView, Integer> burstColumn;
+    @FXML
+    private Canvas resCanvas;
 
     ObservableList<ProcessView> processList = FXCollections.observableArrayList();
+
+    public void setRoundRobinOperation(RoundRobin roundRobin) {
+        this.roundRobinOperation = roundRobin;
+    }
 
     private boolean isValidInput(String input) {
         if (input.matches("^[0-9]*$") && !input.isBlank())
@@ -34,10 +43,8 @@ public class UIController {
     }
 
     private boolean isValidInput(int input, boolean greaterThanZero) {
-        if (greaterThanZero)
-            return input > 0;
-        else
-            return input >= 0;
+        return (greaterThanZero) ? input>0 : input>=0;
+
     }
 
     @FXML
@@ -83,6 +90,8 @@ public class UIController {
             processList.removeAll();
             for (int i = 0; i < Integer.parseInt(processInput); i++)
                 processList.add(new ProcessView("P" + i, 0, 0));
+            //Setting the operation class' quantum time
+            roundRobinOperation.setTimeQuantum(Integer.parseInt(quantumInput));
         }
         else errorMsgLabel.setText("Error: Enter appropriate values");
     }
@@ -91,7 +100,8 @@ public class UIController {
     private void onRunClick() {
         //Step 1: Validate all input
         for (ProcessView proc:processList) {
-            boolean check = isValidInput(proc.getArrivalTime(), false) && isValidInput(proc.getBurstTime(), true);
+            boolean check = isValidInput(proc.getArrivalTime(), false) &&
+                    isValidInput(proc.getBurstTime(), true);
             if (!check) {
                 errorMsgLabel.setText("Error: Enter appropriate values (In the process table)");
                 return;
@@ -99,9 +109,21 @@ public class UIController {
                 errorMsgLabel.setText("");
         }
         //Step 2: Parse all input into objects and add to RoundRobin object
-        //Step 3: Receive results from RoundRobin object
+        for (int i = 0; i < processList.size(); i++) {
+            process proc = new process(i, processList.get(i).getBurstTime(), processList.get(i).getArrivalTime());
+            roundRobinOperation.addProcess(proc);
+        }
+        //Step 3: Clear the canvas and run the code
+        roundRobinOperation.schedule();
         //Step 4: Print Gantt chart
         //Step 5: Print average values
+        double compTime = roundRobinOperation.getAvgCompleteTime();
+        double waitingTime = roundRobinOperation.getAvgWaitingTime();
+        double turnAround = roundRobinOperation.getAvgTurnAroundTime();
         //Step 6: Print each process' values
+        ArrayList<process> procList = roundRobinOperation.getProcesses();
+
+        //Step 7: Clear list to avoid future conflicts
+        roundRobinOperation.clearProcesses();
     }
 }

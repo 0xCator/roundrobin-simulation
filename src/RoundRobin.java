@@ -2,7 +2,7 @@ import java.util.*;
 
 public class RoundRobin {
     private int QuantumTime;
-    protected ArrayList<process> processes = new ArrayList<>();
+    private ArrayList<process> processes = new ArrayList<>();
     private double avgCompleteTime, avgTurnAroundTime, avgWaitingTime;
 
     public RoundRobin(int Q) {
@@ -97,5 +97,9 @@ public class RoundRobin {
 
     public double getAvgTurnAroundTime() {
         return avgTurnAroundTime;
+    }
+
+    public ArrayList<process> getProcesses() {
+        return processes;
     }
 }

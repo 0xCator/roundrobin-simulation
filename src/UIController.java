@@ -119,16 +119,8 @@ public class UIController {
         roundRobinOperation.schedule();
         //Step 4: Print Gantt chart
         drawGantt(gc);
-        //Step 5: Print average values
-        double compTime = roundRobinOperation.getAvgCompleteTime();
-        double waitingTime = roundRobinOperation.getAvgWaitingTime();
-        double turnAround = roundRobinOperation.getAvgTurnAroundTime();
-        String avgText = "Average complete time: " + compTime + "\tAverage waiting time: " +
-                waitingTime + "\tAverage turnaround time: " + turnAround;
-        gc.strokeText(avgText, 0, 56);
-        //Step 6: Print each process' values
-        ArrayList<process> procList = roundRobinOperation.getProcesses();
-
+        //Step 5: Print each process' values and the average values
+        drawValues(gc);
         //Step 7: Clear list to avoid future conflicts
         roundRobinOperation.clearProcesses();
     }
@@ -144,5 +136,24 @@ public class UIController {
             nameSpace = (i>9) ? 5 : 8; //The name's centering depends on the PID
             graphicsContext.strokeText("P"+i, boxStart + nameSpace, 20); //Process name
         }
+    }
+
+    private void drawValues(GraphicsContext graphicsContext) {
+        StringBuilder valueText = new StringBuilder();
+        double compTime = roundRobinOperation.getAvgCompleteTime();
+        double waitingTime = roundRobinOperation.getAvgWaitingTime();
+        double turnAround = roundRobinOperation.getAvgTurnAroundTime();
+        String avgText = "Average completion time: " + compTime + "\t\tAverage waiting time: " +
+                waitingTime + "\tAverage turnaround time: " + turnAround;
+        ArrayList<process> procList = roundRobinOperation.getProcesses();
+        StringBuilder procText = new StringBuilder();
+        for (process currentProc : procList) {
+            String currentText = "P"+currentProc.getID() + " \t\tCompletion time: " +
+                    currentProc.getCompleteTime() + "\t\t\tWaiting time: " + currentProc.getWaitingTime() +
+                    "\t\tTurnaround time: " + currentProc.getTurnAroundTime() + "\n";
+            procText.append(currentText);
+        }
+        valueText.append(procText).append("\n").append(avgText);
+        graphicsContext.strokeText(valueText.toString(), 0, 70);
     }
 }

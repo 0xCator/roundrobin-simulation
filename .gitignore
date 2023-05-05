@@ -1,4 +1,5 @@
 /.idea/
+MANIFEST.MF
 *.iml
 /out/
 *.class

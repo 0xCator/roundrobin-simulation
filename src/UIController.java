@@ -126,33 +126,38 @@ public class UIController {
     }
 
     private void drawGantt(GraphicsContext graphicsContext) {
-        int ganttLength = 3;
+        ArrayList<ArrayList<Integer>> ganttList = roundRobinOperation.getGanttChart();
+        int ganttLength = ganttList.size();
         double boxLength = 30;
         graphicsContext.strokeText("0", 0, 44);
         for (int i = 0; i < ganttLength; i++) {
+            ArrayList<Integer> currentBlock = ganttList.get(i);
             double boxStart = 2 + (boxLength * i), boxEnd = boxLength * (i+1), nameSpace;
             graphicsContext.strokeRect(boxStart, 2, boxLength, 30); //Process box
-            graphicsContext.strokeText(i+2 + "", boxEnd, 44); //Process end point
-            nameSpace = (i>9) ? 5 : 8; //The name's centering depends on the PID
-            graphicsContext.strokeText("P"+i, boxStart + nameSpace, 20); //Process name
+            graphicsContext.strokeText(currentBlock.get(1) + "", boxEnd, 44); //Process end point
+            nameSpace = (currentBlock.get(0)>9) ? 5 : 8; //The name's centering depends on the PID
+            graphicsContext.strokeText("P"+currentBlock.get(0), boxStart + nameSpace, 20); //Process name
         }
     }
 
     private void drawValues(GraphicsContext graphicsContext) {
         StringBuilder valueText = new StringBuilder();
+        //Setting the average values string
         double compTime = roundRobinOperation.getAvgCompleteTime();
         double waitingTime = roundRobinOperation.getAvgWaitingTime();
         double turnAround = roundRobinOperation.getAvgTurnAroundTime();
-        String avgText = "Average completion time: " + compTime + "\t\tAverage waiting time: " +
+        String avgText = "Average response time: " + compTime + "\tAverage waiting time: " +
                 waitingTime + "\tAverage turnaround time: " + turnAround;
+        //Setting the values-per-process string
         ArrayList<process> procList = roundRobinOperation.getProcesses();
         StringBuilder procText = new StringBuilder();
         for (process currentProc : procList) {
-            String currentText = "P"+currentProc.getID() + " \t\tCompletion time: " +
-                    currentProc.getCompleteTime() + "\t\t\tWaiting time: " + currentProc.getWaitingTime() +
+            String currentText = "P"+currentProc.getID() + " \t\tResponse time: " +
+                    currentProc.getCompleteTime() + "\t\tWaiting time: " + currentProc.getWaitingTime() +
                     "\t\tTurnaround time: " + currentProc.getTurnAroundTime() + "\n";
             procText.append(currentText);
         }
+        //Printing all
         valueText.append(procText).append("\n").append(avgText);
         graphicsContext.strokeText(valueText.toString(), 0, 70);
     }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.canvas.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -41,13 +42,16 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="Process number:" GridPane.halignment="CENTER" />
+                  <Label text="Number of Processes:" GridPane.halignment="CENTER" />
                   <TextField fx:id="processCountField" GridPane.rowIndex="1" />
                   <Label text="Quantum time:" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                   <TextField fx:id="quantumCountField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Button mnemonicParsing="false" onAction="#onCreateClick" text="Create" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
                   <Button fx:id="runButton" disable="true" mnemonicParsing="false" onAction="#onRunClick" text="Run" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                </children>
+               <padding>
+                  <Insets left="6.0" right="6.0" />
+               </padding>
             </GridPane>
             <Label fx:id="errorMsgLabel" textFill="RED" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                <font>
@@ -68,7 +72,7 @@
       </TableView>
       <ScrollPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
          <content>
-            <Canvas fx:id="resCanvas" height="200.0" width="800.0" />
+            <Canvas fx:id="resCanvas" height="600.0" width="800.0" />
          </content>
       </ScrollPane>
    </children>

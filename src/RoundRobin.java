@@ -3,11 +3,6 @@ import java.util.*;
 public class RoundRobin {
     private int QuantumTime;
     private ArrayList<process> processes = new ArrayList<>();
-
-    public ArrayList<ArrayList<Integer>> getGanttChart() {
-        return ganttChart;
-    }
-
     private ArrayList<ArrayList<Integer>> ganttChart = new ArrayList<>();
     private double avgCompleteTime, avgTurnAroundTime, avgWaitingTime;
 
@@ -31,9 +26,8 @@ public class RoundRobin {
         ganttChart.clear();
     }
 
-
     public void schedule() {
-        int c = 0, alarm = 0;
+        int c = 0, alarm = 0, chartBlock = 0;
         int finishedProcesses = 0;
         boolean CPUState = false;
         process CPUProcess = new process(0,0,0);
@@ -56,13 +50,11 @@ public class RoundRobin {
                     calc(CPUProcess);
                     finishedProcesses++;
                 }
-                //Should be replaced with gantt chart stuff
-
-                //ganttChart.add(0,Integer.valueOf(CPUProcess.getID()));
-                //ganttChart.add(1,CPUProcess.getCompleteTime());
+                //Appending to the gantt chart arraylist
                 ganttChart.add(new ArrayList<Integer>());
-                ganttChart.get(finishedProcesses-1).add(CPUProcess.getID());
-                ganttChart.get(finishedProcesses-1).add(c);
+                ganttChart.get(chartBlock).add(CPUProcess.getID());
+                ganttChart.get(chartBlock).add(c);
+                chartBlock++;
             }
             //Step 3: Add to CPU if no processes are being used
             if (!CPUState && !processQueue.isEmpty()) {
@@ -118,6 +110,10 @@ public class RoundRobin {
 
     public ArrayList<process> getProcesses() {
         return processes;
+    }
+
+    public ArrayList<ArrayList<Integer>> getGanttChart() {
+        return ganttChart;
     }
 }
 

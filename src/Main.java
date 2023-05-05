@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        RoundRobin sim = new RoundRobin(2);
+        RoundRobin sim = new RoundRobin(5);
         sim.addProcess(new process(0, 7, 0));
         sim.addProcess(new process(1, 4, 1));
         sim.addProcess(new process(2, 15, 2));

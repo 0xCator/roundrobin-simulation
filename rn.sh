@@ -2,7 +2,20 @@
 
 JAR_PATH="./out/roundrobin-simulation.jar"
 ARG=${1:-not}
+MANIFEST="./MANIFEST.MF"
 
+
+if [[ ! -e "${MANIFEST}" ]]; then
+    echo "Manifest-Version: 1.0" > MANIFEST.MF
+    echo "Main-Class: Launcher" >> MANIFEST.MF
+fi
+
+if [ "${ARG}" = "d" ]; then 
+    rm ./out/roundrobin-simulation.jar
+    echo ""
+    echo -e "\033[32m[*!] JAR is  deleted  "
+    exit 0
+fi
 
 if [[ ! -e "${JAR_PATH}" ]]; then 
 
@@ -15,6 +28,9 @@ if [[ ! -e "${JAR_PATH}" ]]; then
     rm *.class
     cd ..
 
+    echo ""
+    echo -e "\033[32m[*!] jar was built in /out/."
+    echo -e "\033[32m[+!] 'r' option to execute jar file."
 fi
 
 if [ "${ARG}" = "r" ]; then 
@@ -22,6 +38,6 @@ if [ "${ARG}" = "r" ]; then
     exit 0
 else 
     echo ""
-    echo -e "\033[32m[*!] Jar was build in /out/."
+    echo -e "\033[32m[*!] Jar was already built in /out/."
     echo -e "\033[32m[+!] 'r' option to execute jar file."
 fi

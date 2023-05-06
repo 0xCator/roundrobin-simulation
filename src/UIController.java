@@ -115,7 +115,7 @@ public class UIController {
             roundRobinOperation.addProcess(proc);
         }
         //Step 3: Clear the canvas and run the operation
-        gc.clearRect(0,0,640,360);
+        gc.clearRect(0,0,600,800);
         roundRobinOperation.schedule();
         //Step 4: Print Gantt chart
         drawGantt(gc);
@@ -129,7 +129,8 @@ public class UIController {
         ArrayList<ArrayList<Integer>> ganttList = roundRobinOperation.getGanttChart();
         int ganttLength = ganttList.size();
         double boxLength = 30;
-        graphicsContext.strokeText("0", 0, 44);
+        int firstArrival = roundRobinOperation.getProcesses().get(0).getArrivalTime();
+        graphicsContext.strokeText(firstArrival+"", 0, 44);
         for (int i = 0; i < ganttLength; i++) {
             ArrayList<Integer> currentBlock = ganttList.get(i);
             double boxStart = 2 + (boxLength * i), boxEnd = boxLength * (i+1), nameSpace;

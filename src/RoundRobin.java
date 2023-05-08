@@ -4,7 +4,7 @@ public class RoundRobin {
     private int QuantumTime;
     private ArrayList<process> processes = new ArrayList<>();
     private ArrayList<ArrayList<Integer>> ganttChart = new ArrayList<>();
-    private double avgCompleteTime, avgTurnAroundTime, avgWaitingTime;
+    private double avgCompleteTime, avgTurnAroundTime, avgWaitingTime, avgResponseTime;
 
     public RoundRobin(int Q) {
         this.QuantumTime = Q;
@@ -59,6 +59,10 @@ public class RoundRobin {
             //Step 3: Add to CPU if no processes are being used
             if (!CPUState && !processQueue.isEmpty()) {
                 CPUProcess = processQueue.remove(); //Dequeue and hold the object
+                //Set the process response time
+                if (CPUProcess.getResponseTime() == -1) {
+                    CPUProcess.setResponseTime(Math.abs(c - CPUProcess.getArrivalTime()));
+                }
                 //Pre-set the process' burst time
                 if (CPUProcess.getBurstTime() >= QuantumTime) {
                     alarm = c + QuantumTime;
@@ -86,18 +90,21 @@ public class RoundRobin {
         this.avgCompleteTime = 0;
         this.avgTurnAroundTime = 0;
         this.avgWaitingTime = 0;
+        this.avgResponseTime = 0;
         for (process p : processes) {
             avgWaitingTime += p.getWaitingTime();
             avgCompleteTime += p.getCompleteTime();
             avgTurnAroundTime += p.getTurnAroundTime();
+            avgResponseTime += p.getResponseTime();
         }
         avgTurnAroundTime = (int)(avgTurnAroundTime * 100 / processes.size()) / 100.0;
         avgWaitingTime = (int)(avgWaitingTime * 100 / processes.size()) / 100.0;
         avgCompleteTime = (int)(avgCompleteTime * 100 / processes.size()) / 100.0;
+        avgResponseTime = (int)(avgResponseTime * 100 / processes.size()) / 100.0;
     }
 
-    public double getAvgCompleteTime() {
-        return avgCompleteTime;
+    public double getAvgResponseTime() {
+        return avgResponseTime;
     }
 
     public double getAvgWaitingTime() {

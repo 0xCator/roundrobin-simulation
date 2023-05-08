@@ -144,17 +144,17 @@ public class UIController {
     private void drawValues(GraphicsContext graphicsContext) {
         StringBuilder valueText = new StringBuilder();
         //Setting the average values string
-        double compTime = roundRobinOperation.getAvgCompleteTime();
+        double responseTime = roundRobinOperation.getAvgResponseTime();
         double waitingTime = roundRobinOperation.getAvgWaitingTime();
         double turnAround = roundRobinOperation.getAvgTurnAroundTime();
-        String avgText = "Average response time: " + compTime + "\tAverage waiting time: " +
+        String avgText = "Average response time: " + responseTime + "\tAverage waiting time: " +
                 waitingTime + "\tAverage turnaround time: " + turnAround;
         //Setting the values-per-process string
         ArrayList<process> procList = roundRobinOperation.getProcesses();
         StringBuilder procText = new StringBuilder();
         for (process currentProc : procList) {
             String currentText = "P"+currentProc.getID() + " \t\tResponse time: " +
-                    currentProc.getCompleteTime() + "\t\tWaiting time: " + currentProc.getWaitingTime() +
+                    currentProc.getResponseTime() + "\t\tWaiting time: " + currentProc.getWaitingTime() +
                     "\t\tTurnaround time: " + currentProc.getTurnAroundTime() + "\n";
             procText.append(currentText);
         }

@@ -15,7 +15,7 @@ public class Main {
             System.out.println(p.getID() + " " + p.getArrivalTime() + " " + p.getBurstTime() + " " + p.getCompleteTime()
                                 + " " + p.getTurnAroundTime() + " " + p.getWaitingTime());
         }
-        System.out.println("Avg comp: " + sim.getAvgCompleteTime());
+        System.out.println("Avg comp: " + sim.getAvgResponseTime());
         System.out.println("Avg turn: " + sim.getAvgTurnAroundTime());
         System.out.println("Avg wait: " + sim.getAvgWaitingTime());
         for (ArrayList List: sim.getGanttChart())

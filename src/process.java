@@ -6,6 +6,7 @@ public class process {
     private int BurstTime;
     private int StartingBurstTime;
     private int CompleteTime;
+    private int ResponseTime;
     private int TurnAroundTime;
     private int WaitingTime;
 
@@ -16,6 +17,7 @@ public class process {
         this.BurstTime = BurstTime;
         this.StartingBurstTime = BurstTime;
         this.ArrivalTime = ArrivalTime;
+        this.ResponseTime = -1;
     }
 
 
@@ -73,5 +75,13 @@ public class process {
     
     public void setWaitingTime(int WaitingTime){
         this.WaitingTime = WaitingTime;
+    }
+
+    public int getResponseTime() {
+        return ResponseTime;
+    }
+
+    public void setResponseTime(int responseTime) {
+        ResponseTime = responseTime;
     }
 }

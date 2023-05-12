@@ -3,6 +3,18 @@
 JAR_PATH="./out/roundrobin-simulation.jar"
 ARG=${1:-not}
 MANIFEST="./MANIFEST.MF"
+JAVAFX="/usr/lib/jvm/javafx-sdk-20.0.1/" 
+
+if [[ ! -e "${JAVAFX}" ]]; then 
+
+    echo ""
+    echo -e "\e[31m[-!]javafx not installed\e[0m"
+    echo ""
+    wget https://download2.gluonhq.com/openjfx/20.0.1/openjfx-20.0.1_linux-x64_bin-sdk.zip  
+    unzip ./openjfx-20.0.1_linux-x64_bin-sdk.zip
+    cp -r ./javafx-sdk-20.0.1/ /usr/lib/jvm/ 
+    export FX="/usr/lib/jvm/javafx-sdk-20.0.1/lib/"
+fi
 
 
 if [[ ! -e "${MANIFEST}" ]]; then
